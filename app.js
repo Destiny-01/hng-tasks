@@ -7,7 +7,7 @@ app.get("/", (req, res) => {
     slackUsername: "diac",
     backend: true,
     age: 12,
-    bio: "This should be a description of me... I guess",
+    bio: "This should be a description of me... I guess.",
   });
 });
 
