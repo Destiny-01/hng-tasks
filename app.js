@@ -1,16 +1,14 @@
-const http = require("http");
+const express = require("express");
 
-const sever = http.createServer((req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  //   res.writeHead(200);
-  res.end(
-    JSON.stringify({
-      slackUsername: "diac",
-      backend: true,
-      age: 12,
-      bio: "This should be a description of me... I guess",
-    })
-  );
+const app = express();
+
+app.get("/", (req, res) => {
+  return res.status(200).json({
+    slackUsername: "diac",
+    backend: true,
+    age: 12,
+    bio: "This should be a description of me... I guess",
+  });
 });
 
-sever.listen(8000);
+app.listen(process.env.PORT || 8000, () => console.log("Server Up"));
