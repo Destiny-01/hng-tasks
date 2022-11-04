@@ -43,28 +43,32 @@ exports.formatData = (arr, teams) => {
     fs.mkdir("files", (err) => {
       arr.forEach((el) => {
         // get the data and insert it in the right place!
-        let attributes = el.field6.split(/:|\.\s|,/);
+        let attributes = el.field7.split(/:|\.\s|;/);
+        // Omo, if your attribute column is incorrect, sorry
+        if (attributes.length < 16) {
+          return;
+        }
         const data = {
           ...rawData,
-          name: el.field3,
-          description: el.field4,
-          minting_tool: teams[parseInt(el.field1 / 20)],
-          series_number: el.field1,
+          name: el.field4,
+          description: el.field5,
+          minting_tool: teams[parseInt(el.field2 / 20)],
+          series_number: el.field2,
           series_total: arr.length,
           attributes: [
-            { trait_type: "Gender", value: el.field5 },
-            { trait_type: "Hair", value: attributes[1] },
-            { trait_type: "Eyes", value: attributes[3] },
-            { trait_type: "Teeth", value: attributes[5] },
-            { trait_type: "Clothing", value: attributes[7] },
-            { trait_type: "Accessories", value: attributes[9] },
-            { trait_type: "Expression", value: attributes[11] },
-            { trait_type: "Strength", value: attributes[13] },
-            { trait_type: "Weakness", value: attributes[15] },
+            { trait_type: "Gender", value: el.field6 },
+            { trait_type: attributes[0], value: attributes[1].trim() },
+            { trait_type: attributes[2].trim(), value: attributes[3].trim() },
+            { trait_type: attributes[4].trim(), value: attributes[5].trim() },
+            { trait_type: attributes[6].trim(), value: attributes[7].trim() },
+            { trait_type: attributes[8].trim(), value: attributes[9].trim() },
+            { trait_type: attributes[10].trim(), value: attributes[11].trim() },
+            { trait_type: attributes[12].trim(), value: attributes[13].trim() },
+            { trait_type: attributes[14].trim(), value: attributes[15].trim() },
           ],
           collection: {
             ...rawData.collection,
-            id: el.field7,
+            id: el.field8,
           },
         };
         let hash = createHash("sha256")
@@ -72,7 +76,7 @@ exports.formatData = (arr, teams) => {
           .digest("hex");
         el.field2 &&
           fs.writeFile(
-            `files/${el.field2}.output.csv`,
+            `files/${el.field3}.output.csv`,
             JSON.stringify({ ...data, hash }, null, 4),
             (err) => {
               console.log(err);
