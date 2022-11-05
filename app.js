@@ -28,21 +28,10 @@ app.post("/", (req, res) => {
     } else if (op.includes("multiply") || op.includes("times")) {
       operation_type = "multiplication";
     }
-    let arr = op.split(" ");
-    arr = arr.filter((i) => !isNaN(parseInt(i)));
-    if (arr.length === 2) {
-      console.log(arr);
-      x = arr[0];
-      y = arr[1];
-    }
-  } else {
-    operation_type = op;
-    x = nx;
-    y = ny;
   }
 
-  x = parseInt(x);
-  y = parseInt(y);
+  x = parseInt(nx);
+  y = parseInt(ny);
   switch (operation_type) {
     case "addition":
       result = x + y;
