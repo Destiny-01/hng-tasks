@@ -20,15 +20,20 @@ app.post("/", (req, res) => {
   let x;
   let y;
   const { operation_type: op, x: nx, y: ny } = req.body;
-  if (op.split(" ").length > 1) {
-    if (op.includes("add")) {
-      operation_type = "addition";
-    } else if (op.includes("sub") || op.includes("minus")) {
-      operation_type = "subtraction";
-    } else if (op.includes("multiply") || op.includes("times")) {
-      operation_type = "multiplication";
-    }
+  // if (op.split(" ").length > 1) {
+  if (op.includes("add") || op.includes("+")) {
+    operation_type = "addition";
+  } else if (op.includes("sub") || op.includes("minus") || op.includes("-")) {
+    operation_type = "subtraction";
+  } else if (
+    op.includes("multiply") ||
+    op.includes("times") ||
+    op.includes("*") ||
+    op.includes("x")
+  ) {
+    operation_type = "multiplication";
   }
+  // }
 
   x = parseInt(nx);
   y = parseInt(ny);
